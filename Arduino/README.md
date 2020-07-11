@@ -5,7 +5,7 @@ xArm servo controller library for Arduino.
 ## Table of Contents
 
 *  [Installation](#installation)
-*  [Setup](setup)
+*  [Setup](#setup)
 *  [Initialization](#initialization)
 *   [Commands](#commands)
 	* [SetPosition](#setposition)
