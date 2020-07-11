@@ -1,41 +1,42 @@
 /*
-  xArmServoController.cpp - Library for controlling xArm servos.
+  xArmServoController.h - Library for controlling xArm servos.
   Created by Chris Courson, July 9, 2020.
   Released into the public domain.
 */
 
-#include "xArmServoController.h"
+#ifndef XARMSERVOCONTROLLER_H
+#define XARMSERVOCONTROLLER_H
 
-xArmServoController::xArmServoController(uint8_t receivePin, uint8_t transmitPin) : serial_port(receivePin, transmitPin)
-{
-  serial_port.begin(9600);
-}
+#include <Arduino.h>
+#include <SoftwareSerial.h>
 
-void xArmServoController::setPosition(uint8_t servo_id, uint16_t position, uint16_t duration, bool wait = false)
-{
-  serial_port.write(SIGNATURE);
-  serial_port.write(SIGNATURE);
-  serial_port.write(8); // length
-  serial_port.write(CMD_SERVO_MOVE);
-  serial_port.write(1); // servo count
-  serial_port.write(lowByte(duration));
-  serial_port.write(highByte(duration));
-  serial_port.write(servo_id);
-  serial_port.write(lowByte(position));
-  serial_port.write(highByte(position));
-  if (wait) {
-    delay(duration);
-  }
-}
+#define SIGNATURE               0x55
 
-void xArmServoController::setPosition(xArmServo servo, bool wait = false)
-{
-  setPosition(servo.id, servo.position, servo.duration, wait);
-}
+#define CMD_SERVO_MOVE          0x03
+//#define CMD_ACTION_GROUP_RUN    0x06
+//#define CMD_ACTION_GROUP_STOP   0x07
+//#define CMD_ACTION_GROUP_SPEED  0x0B
+//#define CMD_GET_BATTERY_VOLTAGE 0x0F 
 
-void xArmServoController::setPosition(xArmServo servos[], uint8_t count, bool step = false)
-{
-  for (int i = 0; i < count; i++) {
-    setPosition(servos[i].id, servos[i].position, servos[i].duration, step);
-  }
-}
+//#define BATTERY_VOLTAGE         0x0F  
+//#define ACTION_GROUP_RUNNING    0x06
+//#define ACTION_GROUP_STOPPED    0x07
+//#define ACTION_GROUP_COMPLETE   0x08
+
+struct xArmServo {
+    uint8_t  servo_id;
+    uint16_t position;
+    uint16_t duration;
+};
+
+class xArmServoController {
+  public:
+    xArmServoController(uint8_t receivePin, uint8_t transmitPin);
+    void setPosition(uint8_t servo_id, uint16_t position, uint16_t duration, bool wait = false);
+    void setPosition(xArmServo servo, bool wait = false);
+    void setPosition(xArmServo servos[], uint8_t count, bool step = false);
+  
+  private:
+    SoftwareSerial serial_port;
+};
+#endif
