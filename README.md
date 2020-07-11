@@ -9,19 +9,19 @@ XArm servo controller libraries
 ### Initialization
 
 ```cpp
-	#define  rxPin  10
-	#define  txPin  11  
+#define  rxPin  10
+#define  txPin  11  
 
-	// define servo controller
-	xArmServoController xarm =  xArmServoController(rxPin, txPin);
+// define servo controller
+xArmServoController xarm =  xArmServoController(rxPin, txPin);
 ```
 ### Structures
 ```cpp
-    struct xArmServo {
-        uint8_t  id;
-        uint16_t position;
-        uint16_t duration;
-    };
+struct xArmServo {
+    uint8_t  id;
+    uint16_t position;
+    uint16_t duration;
+};
 ```
 ## Commands
 ### SetPosition
