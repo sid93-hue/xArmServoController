@@ -35,6 +35,11 @@ class xArmServoController {
     void setPosition(uint8_t servo_id, uint16_t position, uint16_t duration, bool wait = false);
     void setPosition(xArmServo servo, bool wait = false);
     void setPosition(xArmServo servos[], uint8_t count, bool step = false);
+
+    void motorOff(uint8_t servo_id);
+    void motorOff(uint8_t servo_id[], uint8_t count);
+    void motorOff(xArmServo servo);
+    void motorOff(xArmServo servos[], uint8_t count);
   
   private:
     SoftwareSerial serial_port;

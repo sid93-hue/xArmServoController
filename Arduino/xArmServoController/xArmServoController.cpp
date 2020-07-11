@@ -30,12 +30,33 @@ void xArmServoController::setPosition(uint8_t servo_id, uint16_t position, uint1
 
 void xArmServoController::setPosition(xArmServo servo, bool wait = false)
 {
-  setPosition(servo.id, servo.position, servo.duration, wait);
+  setPosition(servo.servo_id, servo.position, servo.duration, wait);
 }
 
 void xArmServoController::setPosition(xArmServo servos[], uint8_t count, bool step = false)
 {
   for (int i = 0; i < count; i++) {
-    setPosition(servos[i].id, servos[i].position, servos[i].duration, step);
+    setPosition(servos[i].servo_id, servos[i].position, servos[i].duration, step);
   }
+}
+
+
+void motorOff(uint8_t servo_id)
+{
+  
+}
+
+void motorOff(uint8_t servo_id[], uint8_t count)
+{
+  
+}
+
+void motorOff(xArmServo servo)
+{
+  
+}
+
+void motorOff(xArmServo servos[], uint8_t count)
+{
+  
 }
