@@ -28,6 +28,8 @@ void xArmServoController::setPosition(uint8_t servo_id, uint16_t position, uint1
   }
 }
 
+/*** SetPosition ***/
+
 void xArmServoController::setPosition(xArmServo servo, bool wait = false)
 {
   setPosition(servo.servo_id, servo.position, servo.duration, wait);
@@ -40,6 +42,7 @@ void xArmServoController::setPosition(xArmServo servos[], uint8_t count, bool st
   }
 }
 
+/*** Off ***/
 
 void xArmServoController::off(uint8_t servo_id)
 {

@@ -9,6 +9,7 @@ xArm servo controller library for Arduino.
 *  [Initialization](#initialization)
 *   [Commands](#commands)
 	* [SetPosition](#setposition)
+	* [Off](#setposition)
 
 ## Installation
 
@@ -122,3 +123,19 @@ xArmServo servos[] = {servo1, servo2, servo3};
 void  setPosition(xArmServo servos[], sizeof(servos) / sizeof(servos[0]), true);
 ```
 Servo movements are defined by an array of xArmServo objects. Sends each action in turn and waits for it to complete before sending the next action. Performs each action individually and returns when all actions have completed.
+
+### Off
+Turns off specified servo(s). Servo movement will stop. Once off, the servo may be manually adjusted.
+
+```cpp
+void off(uint8_t servo_id);
+```
+```cpp
+void off(uint8_t servo_id[], uint8_t count);
+```
+```cpp
+void off(xArmServo servo);
+```
+```cpp
+void off(xArmServo servos[], uint8_t count);
+```
