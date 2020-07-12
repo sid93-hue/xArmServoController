@@ -13,6 +13,7 @@
 #define SIGNATURE               0x55
 
 #define CMD_SERVO_MOVE          0x03
+#define CMD_SERVO_STOP          0x14
 //#define CMD_ACTION_GROUP_RUN    0x06
 //#define CMD_ACTION_GROUP_STOP   0x07
 //#define CMD_ACTION_GROUP_SPEED  0x0B
@@ -35,11 +36,11 @@ class xArmServoController {
     void setPosition(uint8_t servo_id, uint16_t position, uint16_t duration, bool wait = false);
     void setPosition(xArmServo servo, bool wait = false);
     void setPosition(xArmServo servos[], uint8_t count, bool step = false);
-
-    void motorOff(uint8_t servo_id);
-    void motorOff(uint8_t servo_id[], uint8_t count);
-    void motorOff(xArmServo servo);
-    void motorOff(xArmServo servos[], uint8_t count);
+    
+    void off(uint8_t servo_id);
+    void off(uint8_t servo_id[], uint8_t count);
+    void off(xArmServo servo);
+    void off(xArmServo servos[], uint8_t count);
   
   private:
     SoftwareSerial serial_port;

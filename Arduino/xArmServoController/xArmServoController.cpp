@@ -41,22 +41,38 @@ void xArmServoController::setPosition(xArmServo servos[], uint8_t count, bool st
 }
 
 
-void motorOff(uint8_t servo_id)
+void xArmServoController::off(uint8_t servo_id)
 {
-  
+  serial_port.write(SIGNATURE);
+  serial_port.write(SIGNATURE);
+  serial_port.write(4); // length
+  serial_port.write(CMD_SERVO_STOP);
+  serial_port.write(1); // servo count
+  serial_port.write(servo_id);
 }
 
-void motorOff(uint8_t servo_id[], uint8_t count)
+void xArmServoController::off(uint8_t servo_id[], uint8_t count)
 {
-  
+  serial_port.write(SIGNATURE);
+  serial_port.write(SIGNATURE);
+  serial_port.write(count + 3); // length
+  serial_port.write(CMD_SERVO_STOP);
+  serial_port.write(count); // servo count
+  for (int i = 0; i < count; i++) {
+    serial_port.write(servo_id[i]);
+  }
 }
 
-void motorOff(xArmServo servo)
+void xArmServoController::off(xArmServo servo)
 {
-  
+  off(servo.servo_id);
 }
 
-void motorOff(xArmServo servos[], uint8_t count)
+void xArmServoController::off(xArmServo servos[], uint8_t count)
 {
-  
+  uint8_t servo_id[count];
+  for (int i = 0; i < count; i++) {
+    servo_id[i] = servos[i].servo_id;
+  }
+  off(servo_id, count);
 }

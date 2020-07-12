@@ -12,23 +12,18 @@ xArmServo servoStep3 {1, 500, 1000};
 
 xArmServo servos[] = {servoStep1, servoStep2, servoStep3};
 
+xArmServo servo_id[] = {1, 2, 3};
+
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
 
   xarm.setPosition(1, 200, 1000, true);
-  xarm.setPosition(1, 800, 1000, true);
-  xarm.setPosition(1, 500, 1000, true);
-  delay (500);
+  xarm.setPosition(1, 800, 5000);
+
+  delay (2500);
   
-  xarm.setPosition(servoStep1);
-  delay(1000);
-  xarm.setPosition(servoStep2);
-  delay(1000);
-  xarm.setPosition(servoStep3);
-  delay(1500);
-  
-  xarm.setPosition(servos, sizeof(servos) / sizeof(servos[0]), true);
+  xarm.off(servos, 3);
 }
 
 // the loop function runs over and over again forever
