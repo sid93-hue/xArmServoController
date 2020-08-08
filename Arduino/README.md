@@ -157,7 +157,7 @@ Example
 // define servo controller
 xArmServoController xarm = xArmServoController(rxPin, txPin);
 
-void off(6);
+off(6);
 ```
 Turns off gripper servo.
 
@@ -178,7 +178,7 @@ xArmServoController xarm = xArmServoController(rxPin, txPin);
 
 xArmServo servos {1, 2, 3};
 
-void off(servos);
+off(servos);
 ```
 Turns off servos 1, 2 and 3.
 
@@ -199,7 +199,7 @@ xArmServoController xarm = xArmServoController(rxPin, txPin);
 
 xArmServo servo3 {3, 600, 1000};
 
-void off(servos3);
+off(servo3);
 ```
 Turns off servo 3.
 
@@ -225,7 +225,6 @@ xArmServo servo3 {3, 600, 1000};
 
 xArmServo servos[] = {servo1, servo2, servo3};
 
-
-void off(servos);
+off(servos);
 ```
 Turns off servos 1, 2 and 3.
