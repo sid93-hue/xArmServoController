@@ -73,7 +73,7 @@ void xArmServoController::off(xArmServo servo)
 
 void xArmServoController::off(xArmServo servos[], uint8_t count)
 {
-  uint8_t servo_id[count];
+  uint8_t* servo_id = new uint8_t[count];
   for (int i = 0; i < count; i++) {
     servo_id[i] = servos[i].servo_id;
   }
