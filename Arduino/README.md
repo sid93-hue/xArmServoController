@@ -76,13 +76,13 @@ void setPosition(xArmServo servos[], uint8_t count[, bool step = false]);
 **Example 1**
 
 ```cpp
-xArm.SetPosition{1, 200, 1000};
+xArm.SetPosition(1, 200, 1000);
 ```
 Moves servo ID 1 to position 200 and returns immediately. The servo will continue to move for the duration specified.
 
 **Example 2**
 ```cpp
-xArm.SetPosition{1, 200, 1000, true};
+xArm.SetPosition(1, 200, 1000, true);
 ```
 Moves servo ID 1 to position 200 and returns after duration (1000ms) has elapsed.
 
@@ -128,14 +128,104 @@ Servo movements are defined by an array of xArmServo objects. Sends each action 
 Turns off specified servo(s). Servo movement will stop. Once off, the servo may be manually adjusted.
 
 ```cpp
+void off();
+```
+Turns off all servos. Sends off command for servos 1 through 6.
+
+Example
+```cpp
+#define rxPin 10
+#define txPin 11
+
+// define servo controller
+xArmServoController xarm = xArmServoController(rxPin, txPin);
+
+xArm.off();
+```
+___
+
+```cpp
 void off(uint8_t servo_id);
 ```
+Turns off servo specified by **servo_id**.
+
+Example
+```cpp
+#define rxPin 10
+#define txPin 11
+
+// define servo controller
+xArmServoController xarm = xArmServoController(rxPin, txPin);
+
+void off(6);
+```
+Turns off gripper servo.
+
+___
+
 ```cpp
 void off(uint8_t servo_id[], uint8_t count);
 ```
+Turns off multiple servos specified by **uint8_t servo_id[]**.
+
+Example
+```cpp
+#define rxPin 10
+#define txPin 11
+
+// define servo controller
+xArmServoController xarm = xArmServoController(rxPin, txPin);
+
+xArmServo servos {1, 2, 3};
+
+void off(servos);
+```
+Turns off servos 1, 2 and 3.
+
+___
+
 ```cpp
 void off(xArmServo servo);
 ```
+Turns off one servo specified by **xArmServo servo**.
+
+Example
+```cpp
+#define rxPin 10
+#define txPin 11
+
+// define servo controller
+xArmServoController xarm = xArmServoController(rxPin, txPin);
+
+xArmServo servo3 {3, 600, 1000};
+
+void off(servos3);
+```
+Turns off servo 3.
+
+___
+
+**Example 5**
 ```cpp
 void off(xArmServo servos[], uint8_t count);
 ```
+Turns off multiple servos specified by **xArmServo servos[]**.
+
+Example
+```cpp
+#define rxPin 10
+#define txPin 11
+
+// define servo controller
+xArmServoController xarm = xArmServoController(rxPin, txPin);
+
+xArmServo servo1 {1, 200, 1000};
+xArmServo servo2 {2, 400, 1000};
+xArmServo servo3 {3, 600, 1000};
+
+xArmServo servos[] = {servo1, servo2, servo3};
+
+
+void off(servos);
+```
+Turns off servos 1, 2 and 3.

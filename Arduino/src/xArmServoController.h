@@ -41,6 +41,7 @@ class xArmServoController {
     void off(uint8_t servo_id[], uint8_t count);
     void off(xArmServo servo);
     void off(xArmServo servos[], uint8_t count);
+    void off();
   
   private:
     SoftwareSerial serial_port;

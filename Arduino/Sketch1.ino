@@ -12,7 +12,7 @@ xArmServo servoStep3 {1, 500, 1000};
 
 xArmServo servos[] = {servoStep1, servoStep2, servoStep3};
 
-xArmServo servo_id[] = {1, 2, 3};
+int servo_id[] = {1, 2, 3};
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
@@ -23,7 +23,7 @@ void setup() {
 
   delay (2500);
   
-  xarm.off(servos, 3);
+  xarm.off();
 }
 
 // the loop function runs over and over again forever

@@ -80,3 +80,10 @@ void xArmServoController::off(xArmServo servos[], uint8_t count)
   off(servo_id, count);
   delete servo_id;
 }
+
+void xArmServoController::off()
+{
+  uint8_t servo_id[] = {1, 2, 3, 4, 5, 6};
+  off(servo_id, 6);
+  delete servo_id;
+}
