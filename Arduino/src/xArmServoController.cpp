@@ -78,4 +78,5 @@ void xArmServoController::off(xArmServo servos[], uint8_t count)
     servo_id[i] = servos[i].servo_id;
   }
   off(servo_id, count);
+  delete servo_id;
 }

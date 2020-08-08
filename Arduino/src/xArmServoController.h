@@ -3,7 +3,7 @@
   Created by Chris Courson, July 9, 2020.
   Released into the public domain.
 */
-
+#pragma once
 #ifndef XARMSERVOCONTROLLER_H
 #define XARMSERVOCONTROLLER_H
 
