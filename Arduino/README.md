@@ -8,8 +8,8 @@ This work is in progress is frequently changes.
 
 * [Installation](#installation)
 * [Setup](#setup)
-* [xArmServo Structure](<#xArmServo Structure>)
-* [xArmServo Object Initialization](<#xArmServo Object Initialization>)
+* [xArmServo Structure](<#xarmservo structure>)
+* [xArmServo Object Initialization](<#xarmServo object initialization>)
 * [Commands](#commands)
 	* [SetPosition](#setposition)
 	* [GetPosition](#getposition)
@@ -206,7 +206,7 @@ Examples:
 
 * [Example3.ino](Example3/Example3.ino)
 
-### SetPosition
+### GetPosition
 
 Gets the position(s) of the specified servo(s).
 
