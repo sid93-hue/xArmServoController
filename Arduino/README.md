@@ -4,6 +4,7 @@ xArm servo controller library for Arduino.
 
 This work is in progress is frequently changes.
 
+---
 ## Table of Contents
 
 * [Installation](#installation)
@@ -22,6 +23,7 @@ This work is in progress is frequently changes.
 1. Copy the _xArmServoController libraries_ folder from this project into the _Arduino libraries_ folder. This is usually located at C:\ProgramFiles(86\Arduino\libraries.
 1. Open an Arduino example sketch with [Arduino IDE](https://www.arduino.cc/).
 
+---
 ## Setup
 
 ### Initialization
@@ -71,7 +73,7 @@ void loop() {
   // Your code here.
 }
 ```
-
+---
 ### xArmServo Structure
 
 The xArmServoController library exposes global structure **xArmServo** that is used by some functions.
@@ -84,6 +86,7 @@ struct xArmServo {
 };
 ```
 
+---
 ### xArmServo Object Initialization
 
 Example 1:
@@ -138,12 +141,14 @@ void loop() {
 }
 ```
 
+---
 ## Commands
 
 ### SetPosition
 
 Sets the position(s) of the specified servo(s). Optionally returns after duration has elapsed.
 
+---
 ```cpp
 void setPosition(uint8_t servo_id, uint16_t position, uint16_t duration = 1000, bool wait = false);
 ```
@@ -165,6 +170,7 @@ Examples:
 
 * [Example1.ino](Example1/Example1.ino)
 
+---
 ```cpp
 void setPosition(xArmServo servo, uint16_t duration = 1000, bool wait = false);
 ```
@@ -185,6 +191,7 @@ Examples:
 
 * [Example2.ino](Example2/Example2.ino)
 
+---
 ```cpp
 void setPosition(xArmServo servos[], size_t count, uint16_t duration = 1000, bool wait = false);
 ```
@@ -206,6 +213,7 @@ Examples:
 
 * [Example3.ino](Example3/Example3.ino)
 
+---
 ### GetPosition
 
 Gets the position(s) of the specified servo(s).
@@ -229,6 +237,7 @@ Examples:
 
 * [Example4.ino](Example4/Example4.ino)
 
+---
 ```cpp
 uint16_t getPosition(xArmServo &servo);
 ```
@@ -249,6 +258,7 @@ Examples:
 
 * [Example5.ino](Example5/Example5.ino)
 
+---
 ```cpp
 bool getPosition(xArmServo servos[], size_t count);
 ```
@@ -269,6 +279,7 @@ Examples:
 
 * [Example6.ino](Example6/Example6.ino)
 
+---
 ### ServoOff
 
 Turns off motor of the specified servo(s).
@@ -291,6 +302,7 @@ Examples:
 
 * [Example7.ino](Example7/Example7.ino)
 
+---
 ```cpp
 void servoOff(int num, int servo_id, ...);
 ```
@@ -310,6 +322,7 @@ Examples:
 
 * [Example8.ino](Example8/Example8.ino)
 
+---
 ```cpp
 void servoOff(xArmServo servo);
 ```
@@ -328,6 +341,7 @@ Examples:
 
 * [Example9.ino](Example9/Example9.ino)
 
+---
 ```cpp
 void servoOff(xArmServo servos[], size_t count);
 ```
@@ -347,6 +361,7 @@ Examples:
 
 * [Example10.ino](Example10/Example10.ino)
 
+---
 ```cpp
 void servoOff();
 ```
@@ -365,6 +380,7 @@ Examples:
 
 * [Example11.ino](Example11/Example11.ino)
 
+---
 ### GetBatteryVoltage
 
 Gets the battery or power supply voltage.
