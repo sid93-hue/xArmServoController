@@ -8,8 +8,8 @@ This work is in progress is frequently changes.
 
 * [Installation](#installation)
 * [Setup](#setup)
-* [xArmServo Structure](<#xarmservo structure>)
-* [xArmServo Object Initialization](<#xarmServo object initialization>)
+* [xArmServo Structure](<#xarmservo-structure>)
+* [xArmServo Object Initialization](<#xarmServo-object -initialization>)
 * [Commands](#commands)
 	* [SetPosition](#setposition)
 	* [GetPosition](#getposition)
