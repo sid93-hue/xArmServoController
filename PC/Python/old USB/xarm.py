@@ -1,5 +1,6 @@
-import serial, time
-from multimethod import multimethod
+import serial, time, sys, usb.core
+from multimethod import multimethod # (pip install multimethod)
+import usb.core           # https://github.com/pyusb/pyusb (pip install pyusb, pip install libusb)
 
 
 class Servo:
@@ -17,8 +18,14 @@ class Controller:
 
     debug = False
 
-    def __init__(self, com_port):
-        self.__serial_port = serial.Serial(com_port, 9600, timeout = 1)
+    def __init__(self):
+        # self.__device = usb.core.find(idVendor=0x0483, idProduct=0x5750)
+        # if self.__device is None:
+        #    raise ValueError('Device not found')
+        dev = usb.core.find(find_all=True)
+        for cfg in dev:
+            print('Decimal VendorID=' + str(cfg.idVendor) + ' & ProductID=' + str(cfg.idProduct) + '\n')
+            print('Hexadecimal VendorID=' + hex(cfg.idVendor) + ' & ProductID=' + hex(cfg.idProduct) + '\n\n')
 
     # SetPosition
 
