@@ -1,7 +1,7 @@
 import xarm
 
 # serial_number': '497223563535' and '497253743535'
-arm = xarm.Controller('USB', True)
+arm = xarm.Controller('USB', debug=True)
 
 servo1 = xarm.Servo(1, 500)
 servo2 = xarm.Servo(2, 500)
@@ -34,5 +34,18 @@ servo6 = xarm.Servo(6, 500)
 
 # arm.servoOff()
 
-postion = arm.getPosition(2, True)
-print('position', postion)
+# postion = arm.getPosition(2)
+# print('position', postion)
+# postion = arm.getPosition(2, True)
+# print('position (degrees)', postion)
+
+# postion = arm.getPosition(2)
+# print('servo.position', postion)
+# postion = arm.getPosition(servo2, True)
+# print('servo.position (degrees)', postion)
+
+# postion = arm.getPosition([servo1, servo2, servo3, servo4, servo5, servo6])
+# print('positions: ' + ' '.join('{0}'.format(x.position) for x in [servo1, servo2, servo3, servo4, servo5, servo6]))
+# print('servos.positions (degrees): ' + ' '.join('{0}'.format(x.angle) for x in [servo1, servo2, servo3, servo4, servo5, servo6]))
+
+print('Battery voltage:', arm.getBatteryVoltage())
