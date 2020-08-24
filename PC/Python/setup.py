@@ -18,5 +18,6 @@ setup(
     author_email='chris@chrisbot.com',
     url='https://github.com/ccourson/xArmServoController/tree/master/PC/Python/xarm',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs', 'old'))
+    packages=find_packages(exclude=('tests', 'docs', 'old')),
+    install_requires=['pywinusb']
 )

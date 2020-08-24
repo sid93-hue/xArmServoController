@@ -1,14 +1,1 @@
-pip install git+https://github.com/ccourson/xArmServoController/tree/master/PC/Python/xarm
-
-test
-
-****
-this
-****
-
-one
----
-
-===
-two
-===
+pip install "git+https://github.com/ccourson/xArmServoController.git#egg=master&subdirectory=PC/Python"
