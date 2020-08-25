@@ -194,14 +194,46 @@ arm.setPosition([servo1, [2, 500], [3, 0.0]], 2000)
 
 **getPosition**(*servos*__[__, *degrees=False*__]__)
 <dl><dd>
-Moves one or more servo
+Returns the current <em>position</em> of one or more <em>servos</em>.
 
+By default, the <em>unit position</em> is returned. When <em>degrees</em> is <code>True</code>, the <em>angle</em> is returned.
 
+The <em>servos</em> parameter may be a servo ID (1 to 6) or a <em>Servo</em> object or a list of one or more <em>Servo</em> objects and servo IDs.
+
+```py
+import xarm
+
+arm = xarm.Controller('USB')
+
+servo1 = xarm.Servo(1)
+servo2 = xarm.Servo(2)
+servo3 = xarm.Servo(3)
+
+# Gets the position of servo 1 in units
+position = arm.getPosition(1)
+print('Servo 1 position:', position)
+
+# Gets the position of servo 2 as defined above
+position = arm.getPosition(servo2)
+print('Servo 2 position:', position)
+
+# Gets the position of servo 3 in degrees
+position = arm.getPosition(3, True)
+print('Servo 3 position (degrees):', position)
+
+# Gets the position of servo 2 as defined above
+# It is not necessary to set the degreees parameter
+# because the Servo object performes that conversion
+position = arm.getPosition([servo1, servo2, servo3])
+print('Servo 1 position (degrees):', servo1.angle)
+print('Servo 2 position (degrees):', servo2.angle)
+print('Servo 3 position (degrees):', servo3.angle)
+```
 </dd></dl>
 
-**servoOff**(__[__ *servos=None*__]__)
+**servoOff**(__[__*servos=None*__]__)
 <dl><dd>
-Moves one or more servos.
+Turns off servo motor of one or more servos.
 
 
 </dd></dl>
@@ -209,7 +241,7 @@ Moves one or more servos.
 
 **getBatteryVoltage**()
 <dl><dd>
-Moves one or more servos.
+Returns battery or power supply voltage.
 
 
 </dd></dl>
