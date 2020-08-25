@@ -198,7 +198,7 @@ Returns the current <em>position</em> of one or more <em>servos</em>.
 
 By default, the <em>unit position</em> is returned. When <em>degrees</em> is <code>True</code>, the <em>angle</em> is returned.
 
-The <em>servos</em> parameter may be a servo ID (1 to 6) or a <em>Servo</em> object or a list of one or more <em>Servo</em> objects and servo IDs.
+The <em>servos</em> parameter may be a servo ID (1 to 6) or a <em>Servo</em> object or a list of one or more <em>Servo</em> objects.
 
 ```py
 import xarm
@@ -233,9 +233,29 @@ print('Servo 3 position (degrees):', servo3.angle)
 
 **servoOff**(__[__*servos=None*__]__)
 <dl><dd>
-Turns off servo motor of one or more servos.
+Turns off motor of one or more servos. If <em>servos</em> paramter is not specified, will turn off all servo motors.
 
+```py
+import xarm
 
+arm = xarm.Controller('USB')
+
+servo2 = xarm.Servo(2)
+servo5 = xarm.Servo(5)
+servo6 = xarm.Servo(6)
+
+# Turns off servo motor 1
+arm.servoOff(1)
+
+# Turns off servo motor 1
+arm.servoOff(servo2)
+
+# Turns off servo motors 3 and 4
+arm.servoOff([3, 4])
+
+# Turns off servo motors 5 and 6
+arm.servoOff([servo5, servo6])
+```
 </dd></dl>
 
 

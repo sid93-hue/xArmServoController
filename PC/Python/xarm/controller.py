@@ -115,10 +115,13 @@ class Controller:
             data.append(servos)
         elif isinstance(servos, Servo):
             data.append(servos.servo_id)
-        elif isinstance(servos, list) and all(isinstance(x, Servo) for x in servos):
+        elif isinstance(servos, list):
             data[0] = len(servos)
             for servo in servos:
-                data.append(servo.servo_id)
+                if isinstance(servo, int):
+                    data.append(servo)
+                elif isinstance(servo, Servo):
+                    data.append(servo.servo_id)
         elif servos == None:
             data = [6, 1,2,3,4,5,6]
         else:
