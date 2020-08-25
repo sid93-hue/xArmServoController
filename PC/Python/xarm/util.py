@@ -17,7 +17,7 @@ class Util:
             raise ValueError('Parameter \'degrees\' must be a float value between -125.0 and 125.0')
         x = Util._x_round(degrees)
         y = Util._invlerp(-125.0, 125.0, x)
-        return Util._lerp(0, 1000, y)
+        return int(Util._lerp(0, 1000, y))
 
     @staticmethod
     def _position_to_angle(position):

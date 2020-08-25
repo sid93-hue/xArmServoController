@@ -63,14 +63,15 @@ class Controller:
                 if isinstance(servo, Servo):
                     data.extend([servo.servo_id, servo.position & 0xff, (servo.position & 0xff00) >> 8])
                 elif len(servo) == 2 and isinstance(servo[0], int):
-                    if isinstance(position, int):
+                    if isinstance(servo[1], int):
                         if servo[1] < 0 or servo[1] > 1000:
                             raise ValueError('Parameter \'position\' must be between 0 and 1000.')
+                        position = servo[1]
                     elif isinstance(servo[1], float):
                         if servo[1] < -125.0 or servo[1] > 125.0:
                             raise ValueError('Parameter \'position\' must be between -125.0 and 125.0.')
-                        servo[1] = Util._angle_to_position(servo[1])
-                    data.extend([servo[0], servo[1] & 0xff, (servo[1] & 0xff00) >> 8])
+                        position = Util._angle_to_position(servo[1])
+                    data.extend([servo[0], position & 0xff, (position & 0xff00) >> 8])
                 else:
                     raise ValueError('Parameter list \'servos\' is not valid.')
         else:
