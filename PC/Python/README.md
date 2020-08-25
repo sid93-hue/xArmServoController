@@ -1,10 +1,16 @@
 # /PC/Python/xArmController
 
 ## Table of Content
-1. [Setting up a Python development environment](#setting-up-a-windows-python-development-environment)
-1. [Installing the xArmController module](#installing-the-xArmController-module)
-1. [Methods and examples](#methods-and-examples)
-1. [Things left To-Do](#to-do)
+* [Setting up a Python development environment](#setting-up-a-windows-python-development-environment)
+* [Installing the xArmController module](#installing-the-xArmController-module)
+* [Methods and examples](#methods-and-examples)
+    * [*class* Servo](#servo)
+    * [*class* Controller](#controller)
+    * [setPosition](#setposition)
+    * [getPosition](#getposition)
+    * [servoOff](#servooff)
+    * [getBatteryVoltage](#getbatteryvoltage)
+* [Things left To-Do](#to-do)
 
 ___
 ## Setting up a Windows Python development environment
@@ -85,6 +91,7 @@ In the same way, the Controller can connect to one or more serailly connected xA
 
 ### Classes and Methods
 
+<a id="servo"></a>
 *class* **Servo**(*servo_id*__[__, *position=500*__]__)
 <dl><dd>
 Returns a <i>Servo</i> object. The Servo class is used to hold the position of a given servo in units and angle.
@@ -120,6 +127,7 @@ Output:
 >servo angle: -50.0
 </dd></dl>
 
+<a id="controller"></a>
 *class* **Controller**(*com_port*__[__, *debug=False*__]__)
 <dl><dd>
 Returns a <i>Controller</i> object. The Controller class connects Python to the xArm. The port to connect to the xArm through is determined by <i>com_port</i> which can be a serial port (<code>COM5</code>) or USB port (<code>USB</code>). Multiple xArms may be connected. If more than one xArm is attached by USB, each can be identified by appending the serial number to 'USB' (<code>USB497223563535</code>). 
@@ -139,6 +147,7 @@ arm5 = xarm.Controller('COM7', debug=True)  # named argument
 ```
 </dd></dl>
 
+<a id="setposition"></a>
 **setPosition**(*servos*__[__, *position=None*, *duration=1000*, *wait=False*__]__)
 <dl><dd>
 Moves one or more <em>servos</em> to a specified <em>position</em> over a <em>duration</em> and optionallly <em>wait</em>s during the duration.
@@ -192,6 +201,7 @@ arm.setPosition([servo1, [2, 500], [3, 0.0]], 2000)
 ```
 </dd></dl>
 
+<a id="getposition"></a>
 **getPosition**(*servos*__[__, *degrees=False*__]__)
 <dl><dd>
 Returns the current <em>position</em> of one or more <em>servos</em>.
@@ -231,6 +241,7 @@ print('Servo 3 position (degrees):', servo3.angle)
 ```
 </dd></dl>
 
+<a id="servooff"></a>
 **servoOff**(__[__*servos=None*__]__)
 <dl><dd>
 Turns off motor of one or more servos. If <em>servos</em> paramter is not specified, will turn off all servo motors.
@@ -258,12 +269,19 @@ arm.servoOff([servo5, servo6])
 ```
 </dd></dl>
 
-
+<a id="getbatteryvoltage"></a>
 **getBatteryVoltage**()
 <dl><dd>
-Returns battery or power supply voltage.
+Returns battery or power supply voltage on volts.
 
+```py
+import xarm
 
+arm = xarm.Controller('USB')
+
+battery_voltage = arm.getBatteryVoltage()
+print('Battery voltage (volts):', battery_voltage)
+```
 </dd></dl>
 
 ___
