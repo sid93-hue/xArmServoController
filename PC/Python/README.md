@@ -83,14 +83,33 @@ Output:
 
 In the same way, the Controller can connect to one or more serailly connected xArms.
 
-### Methods
+### Classes and Methods
+
+*class* **Servo**(*servo_id*__[__, *position=None*, *degrees=None*__]__)
+<dl><dd>
+Returns a <i>Servo</i> object. The Servo class is used to hold the position of a given servo in units and angle.
+
+Properties include:
+<ul>
+<li>servo_id - ID of servo.</li>
+<li>position - Position of servo in units (0 to 1000).</li>
+<li>angle - Angle of servo in degrees (-125.0 to 125.0 in 0.25 degree integral).</li>
+</ul>
+
+Setting position will also set the corresponding angle and visa-versa.
+</dd></dl>
 
 *class* **Controller**(*com_port*__[__, *debug=False*__]__)
 <dl><dd>
 Returns a <i>Controller</i> object. The Controller class connects Python to the xArm. The port to connect to the xArm through is determined by <i>com_port</i> which can be a serial port (<code>COM5</code>) or USB port (<code>USB</code>). Multiple xArms may be connected. If more than one xArm is attached by USB, each can be identified by appending the serial number to 'USB' (<code>USB497223563535</code>). Optionally, when <i>debug</i> is <code>True</code>, diganostic information to be printed to the terminal.
-</dt></dl>
+</dd></dl>
+
+**setPosition**(*servos*__[__], *position=None*, *duration=1000*, *wait=False*__]__)
+<dl><dd>
+Moves one or more servos.
 
 
+</dd></dl>
 
 ___
 ## To-Do
