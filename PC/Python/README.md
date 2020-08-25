@@ -82,6 +82,13 @@ Output:
 
 In the same way, the Controller can connect to one or more serailly connected xArms.
 
+### Methods
+
+*class* **Controller**(*com_port*_[_, *debug=False*_]_)
+<dd>The Controller class connects Python to the xArm.
+| com_port | Can be a serial port (COM5) or USB port (USB). If more than one xArm is attached by USB, each can be specified by appending the serial number to USB (USB497223563535). |
+| debug | When `True` will cause diganostic information to be printed to the terminal. |</dd>
+
 
 ___
 ## To-Do
