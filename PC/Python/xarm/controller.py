@@ -44,10 +44,15 @@ class Controller:
     def setPosition(self, servos, position=None, duration=1000, wait=False):
         data = bytearray([1, duration & 0xff, (duration & 0xff00) >> 8])
 
-        if isinstance(servos, int):
+        if isinstance(servos, int) or isinstance(servos, float):
             if position == None:
                 raise ValueError('Parameter \'position\' missing.')
+            if isinstance(position, int):
+                if position < 0 or position > 1000:
+                    raise ValueError('Parameter \'position\' must be between 0 and 1000.')
             if isinstance(position, float):
+                if position < -125.0 or position > 125.0:
+                    raise ValueError('Parameter \'position\' must be between -125.0 and 125.0.')
                 position = Util._angle_to_position(position)
             data.extend([servos, position & 0xff, (position & 0xff00) >> 8])
         elif isinstance(servos, Servo):
@@ -58,7 +63,12 @@ class Controller:
                 if isinstance(servo, Servo):
                     data.extend([servo.servo_id, servo.position & 0xff, (servo.position & 0xff00) >> 8])
                 elif len(servo) == 2 and isinstance(servo[0], int):
-                    if isinstance(servo[1], float):
+                    if isinstance(position, int):
+                        if servo[1] < 0 or servo[1] > 1000:
+                            raise ValueError('Parameter \'position\' must be between 0 and 1000.')
+                    elif isinstance(servo[1], float):
+                        if servo[1] < -125.0 or servo[1] > 125.0:
+                            raise ValueError('Parameter \'position\' must be between -125.0 and 125.0.')
                         servo[1] = Util._angle_to_position(servo[1])
                     data.extend([servo[0], servo[1] & 0xff, (servo[1] & 0xff00) >> 8])
                 else:
