@@ -6,11 +6,13 @@
 
 #include "xArmServoController.h"
 
-xArmServoController::xArmServoController(Stream &serial_port) : serial_port(serial_port) {}
+xArmServoController::xArmServoController(xArmMode mode, Stream &serial_port) : serial_port(serial_port) {
+  xMode = mode;
+}
 
-/*** Send and Recv ***/
+/*** Send, Recv and checkServoLimits ***/
 
-void xArmServoController::send(uint8_t cmd, size_t len = 0)
+void xArmServoController::send(uint8_t cmd, uint8_t len = 0)
 {
   serial_port.flush();
   serial_port.write(SIGNATURE);
@@ -19,43 +21,66 @@ void xArmServoController::send(uint8_t cmd, size_t len = 0)
   serial_port.write(cmd);
   if (len > 0) {
     serial_port.write(_buffer, len);
-    if (debug) {
+/*     if (debug) {
       Serial.print("\nSend Data: "); 
       for (int i = 0; i < len; i++) {
         Serial.print(_buffer[i], DEC); Serial.print(' ');
       }
     }
-  }
+ */  }
 }
 
-size_t xArmServoController::recv(uint8_t cmd)
+uint8_t xArmServoController::recv(uint8_t cmd)
 {
   serial_port.readBytes(_buffer, 4);
 
-  if (debug) {
+/*   if (debug) {
     Serial.print("\nRecv Data: "); 
     for (int i = 0; i < 4; i++) {
       Serial.print(_buffer[i], DEC); Serial.print(' ');
     }
   }
-  
+ */  
   if (_buffer[0] == SIGNATURE && _buffer[1] == SIGNATURE && _buffer[3] == cmd) {
-    size_t len = _buffer[2] - 2;
+    uint8_t len = _buffer[2] - 2;
     serial_port.readBytes(_buffer, len);
-    if (debug) {
+/*     if (debug) {
       for (int i = 0; i < len; i++) {
         Serial.print(_buffer[i], DEC); Serial.print(' ');
       }
     }
-    return len;
+ */    return len;
   }
   return -1;
 }
 
+uint16_t xArmServoController::clamp(uint16_t v, uint16_t lo, uint16_t hi) {
+    return (v < lo) ? lo : (hi < v) ? hi : v;
+}
+
+uint16_t xArmServoController::clampServoLimits(uint8_t servo, uint16_t value) {
+  switch (xMode)
+  {
+    case xArm:
+      return clamp(value, 0, 1000);
+
+    case LeArm:
+      if(servo == 1) {
+        return clamp(value, 1500, 2500);
+      } else {
+        return clamp(value, 500, 2500);
+      }
+
+    default:
+      return value;
+  }
+}
+
 /*** SetPosition ***/
 
-void xArmServoController::setPosition(uint8_t servo_id, uint16_t position, uint16_t duration = 1000, bool wait = false)
+void xArmServoController::setPosition(uint8_t servo_id, uint16_t position, uint16_t duration = 1000, boolean wait = false)
 {
+  position = clampServoLimits(servo_id, position);
   _buffer[0] = 1;
   _buffer[1] = lowByte(duration);
   _buffer[2] = highByte(duration);
@@ -68,14 +93,14 @@ void xArmServoController::setPosition(uint8_t servo_id, uint16_t position, uint1
   }
 }
 
-void xArmServoController::setPosition(xArmServo servo, uint16_t duration = 1000, bool wait = false)
+void xArmServoController::setPosition(xArmServo servo, uint16_t duration = 1000, boolean wait = false)
 {
   setPosition(servo.servo_id, servo.position, duration, wait);
 }
 
-void xArmServoController::setPosition(xArmServo servos[], size_t count, uint16_t duration = 1000, bool wait = false)
+void xArmServoController::setPosition(xArmServo servos[], uint8_t count, uint16_t duration = 1000, boolean wait = false)
 {
-  size_t len = count * 3 + 3;
+  uint8_t len = count * 3 + 3;
   _buffer[0] = count;
   _buffer[1] = lowByte(duration);
   _buffer[2] = highByte(duration);
@@ -111,7 +136,7 @@ uint16_t xArmServoController::getPosition(xArmServo &servo)
   return pos;
 }
 
-bool xArmServoController::getPosition(xArmServo servos[], size_t count)
+boolean xArmServoController::getPosition(xArmServo servos[], uint8_t count)
 {
   _buffer[0] = count;
   for (int i = 1, j = 0; j < count; i++, j++) {
@@ -138,7 +163,7 @@ void xArmServoController::servoOff(uint8_t servo_id)
   send(CMD_SERVO_STOP, 2);
 }
 
-void xArmServoController::servoOff(int num, int servo_id, ...)
+void xArmServoController::servoOff(uint8_t num, uint8_t servo_id, ...)
 {
   _buffer[0] = num;
   _buffer[1] = servo_id;
@@ -159,7 +184,7 @@ void xArmServoController::servoOff(xArmServo servo)
   servoOff(servo.servo_id);
 }
 
-void xArmServoController::servoOff(xArmServo servos[], size_t count)
+void xArmServoController::servoOff(xArmServo servos[], uint8_t count)
 {
   _buffer[0] = count;
   for (int i = 1, j = 0; j < count; i++, j++) {
@@ -179,6 +204,26 @@ void xArmServoController::servoOff()
   _buffer[6] = 6;
   send(CMD_SERVO_STOP, 7);
 }
+
+/*** Action Group ***/
+
+  void xArmServoController::actionRun(uint8_t group, uint16_t times) {
+    _buffer[0] = group;
+    _buffer[1] = lowByte(times);
+    _buffer[2] = highByte(times);
+    send(CMD_ACTION_GROUP_RUN, 3);
+  }
+
+  void xArmServoController::actionStop() {
+    send(CMD_ACTION_GROUP_STOP, 0);
+  }
+
+  void xArmServoController::actionSpeed(uint8_t group, uint16_t percentage) {
+    _buffer[0] = group;
+    _buffer[1] = lowByte(percentage);
+    _buffer[2] = highByte(percentage);
+    send(CMD_ACTION_GROUP_SPEED, 3);
+  }
 
 /*** GetBatteryVoltage ***/
 

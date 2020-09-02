@@ -1,6 +1,6 @@
 ﻿# Arduino xArmServoController
 
-xArm servo controller library for Arduino.
+xArm and LeArm servo controller library for Arduino.
 
 This work is in progress is frequently changes.
 
@@ -12,10 +12,11 @@ This work is in progress is frequently changes.
 * [xArmServo Structure](<#xarmservo-structure>)
 * [xArmServo Object Initialization](<#xarmServo-object-initialization>)
 * [Commands](#commands)
-	* [SetPosition](#setposition)
-	* [GetPosition](#getposition)
-	* [ServoOff](#servooff)
-	* [GetBatteryVoltage](#getbatteryvoltage)
+	* [SetPosition](#setposition) [xArm/LeArm]
+	* [GetPosition](#getposition) [xArm/LeArm]
+	* [ServoOff](#servooff) [xArm]
+	* [GetBatteryVoltage](#getbatteryvoltage) [xArm/LeArm]
+* [License](#license)
 
 ## Installation
 
@@ -144,11 +145,11 @@ void loop() {
 ---
 ## Commands
 
-### SetPosition
+<h3 id="setposition">SetPosition [xArm/LeArm]</h3>
 
 Sets the position(s) of the specified servo(s). Optionally returns after duration has elapsed.
 
----
+___
 ```cpp
 void setPosition(uint8_t servo_id, uint16_t position, uint16_t duration = 1000, bool wait = false);
 ```
@@ -214,7 +215,7 @@ Examples:
 * [Example3.ino](Example3/Example3.ino)
 
 ---
-### GetPosition
+<h3 id=getposition>GetPosition [xArm/LeArm]</h3>
 
 Gets the position(s) of the specified servo(s).
 
@@ -280,7 +281,7 @@ Examples:
 * [Example6.ino](Example6/Example6.ino)
 
 ---
-### ServoOff
+<h3 id="servooff">ServoOff [xArm]</h3>
 
 Turns off motor of the specified servo(s).
 
@@ -381,7 +382,7 @@ Examples:
 * [Example11.ino](Example11/Example11.ino)
 
 ---
-### GetBatteryVoltage
+<h3 id="getbatteryvoltage">GetBatteryVoltage [xArm/LeArm]</h3>
 
 Gets the battery or power supply voltage.
 
@@ -401,3 +402,7 @@ Returns:
 Examples:
 
 * [Example12.ino](Example12/Example12.ino)
+
+# License
+
+All assets are under the [GNU GENERAL PUBLIC LICENSE](LICENSE) and in the public domain unless otherwise noted.
