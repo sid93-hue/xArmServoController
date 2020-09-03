@@ -1,5 +1,6 @@
 /*
   xArmServoController.h - Library for controlling xArm servos.
+  Version 1.0.0
   Created by Chris Courson, July 9, 2020.
   Released into the public domain.
 */
@@ -19,50 +20,48 @@
 #define CMD_SERVO_STOP          0x14
 #define CMD_GET_SERVO_POSITION  0x15
 
-enum xArmMode : uint8_t {xArm, LeArm};
+enum xArmMode : int {xArm, LeArm};
 
 struct xArmServo {
-    uint8_t  servo_id;
-    uint16_t position;
+    int servo_id;
+    unsigned position;
 };
 
 class xArmServoController {
-  public:
-    // boolean debug = false;
-  
+  public:  
     xArmServoController(xArmMode mode, Stream &serial_port);
 
-    void setPosition(uint8_t servo_id, uint16_t position, uint16_t duration = 1000, boolean wait = false);
-    void setPosition(xArmServo servo, uint16_t duration = 1000, boolean wait = false);
-    void setPosition(xArmServo servos[], uint8_t count, uint16_t duration = 1000, boolean wait = false);
+    void setPosition(int servo_id, unsigned position, unsigned duration = 1000, bool wait = false);
+    void setPosition(xArmServo servo, unsigned duration = 1000, bool wait = false);
+    void setPosition(xArmServo servos[], int count, unsigned duration = 1000, bool wait = false);
 
-    uint16_t getPosition(uint8_t servo_id);
-    uint16_t getPosition(xArmServo &servo);
-    boolean getPosition(xArmServo servos[], uint8_t count);
+    int getPosition(int servo_id);
+    int getPosition(xArmServo &servo);
+    bool getPosition(xArmServo servos[], int count);
     
-    void servoOff(uint8_t servo_id);
-    void servoOff(uint8_t num, uint8_t servo_id, ...);
+    void servoOff(int servo_id);
+    void servoOff(int num, int servo_id, ...);
     void servoOff(xArmServo servo);
-    void servoOff(xArmServo servos[], uint8_t count);
+    void servoOff(xArmServo servos[], int count);
     void servoOff();
 
-    void actionRun(uint8_t group, uint16_t times);
+    void actionRun(int group, unsigned times);
     void actionStop();
-    void actionSpeed(uint8_t group, uint16_t percentage);
+    void actionSpeed(int group, unsigned percent);
 
-    uint16_t getBatteryVoltage();
+    int getBatteryVoltage();
     
   protected:
     Stream &serial_port;
   
   private:
-    uint8_t _buffer[32];
+    byte _buffer[32];
     xArmMode xMode;
     
-    uint16_t clamp(uint16_t v, uint16_t lo, uint16_t hi);
-    uint16_t clampServoLimits(uint8_t servo, uint16_t value);
-    void send(uint8_t cmd, uint8_t len);
-    uint8_t recv(uint8_t cmd);
+    unsigned clamp(unsigned v, unsigned lo, unsigned hi);
+    unsigned clampServoLimits(int servo, unsigned value);
+    void send(int cmd, int len);
+    int recv(int cmd);
 };
 
 #endif
