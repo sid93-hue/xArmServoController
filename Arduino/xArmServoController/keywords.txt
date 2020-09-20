@@ -7,6 +7,9 @@ servoOff			KEYWORD2
 actionRun			KEYWORD2
 actionStop		KEYWORD2
 actionSpeed		KEYWORD2
+actionIsRunning		KEYWORD2
+beep			KEYWORD2
 getBatteryVoltage		KEYWORD2
+beep			KEYWORD2
 xArm			KEYWORD3
 LeArm			KEYWORD3

@@ -184,11 +184,12 @@ void xArmServoController::servoOff()
 
 /*** Action Group ***/
 
-  void xArmServoController::actionRun(int group, unsigned times) {
+  void xArmServoController::actionRun(int group, unsigned times = 1) {
     _buffer[0] = group;
     _buffer[1] = lowByte(times);
     _buffer[2] = highByte(times);
     send(CMD_ACTION_GROUP_RUN, 3);
+    actionRunning = true;
   }
 
   void xArmServoController::actionStop() {
@@ -199,7 +200,32 @@ void xArmServoController::servoOff()
     _buffer[0] = group;
     _buffer[1] = lowByte(percent);
     _buffer[2] = highByte(percent);
+    bool _actionRunning = actionRunning;
     send(CMD_ACTION_GROUP_SPEED, 3);
+    actionRunning = _actionRunning;
+  }
+
+  bool xArmServoController::actionIsRunning() {
+    return actionRunning;
+  }
+
+  bool xArmServoController::serialEvent() {
+    if (actionRunning) {
+      if (-1 != serial_port.readBytes(_buffer, 4)) {
+        if (_buffer[0] == SIGNATURE && _buffer[1] == SIGNATURE) {
+          switch (_buffer[3])
+          {
+          case CMD_ACTION_GROUP_STOP:
+          case CMD_ACTION_GROUP_END:
+            actionRunning = false;
+            return true;
+          default:
+            break;
+          }
+        }
+      }
+    }
+    return false;
   }
 
 /*** GetBatteryVoltage ***/
@@ -211,4 +237,8 @@ int xArmServoController::getBatteryVoltage()
     return _buffer[1] * 256 + _buffer[0];
   }
   return -1;
+}
+
+void xArmServoController::beep() {
+  serial_port.write((byte)CMD_BEEP);
 }
